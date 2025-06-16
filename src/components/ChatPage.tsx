@@ -4,6 +4,9 @@ import { ChatSidebar } from "./ChatSidebar";
 import { ChatHeader } from "./ChatHeader";
 import { ChatArea } from "./ChatArea";
 import { ProfileModal } from "./ProfileModal";
+import { MoodTracker } from "./MoodTracker";
+import { CrisisResources } from "./CrisisResources";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 interface Message {
   id: string;
@@ -23,9 +26,11 @@ export const ChatPage = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [showMoodTracker, setShowMoodTracker] = useState(false);
+  const [showCrisisResources, setShowCrisisResources] = useState(false);
 
   const generateAIResponse = (userMessage: string): string => {
-    // Simple AI response simulation - in real app this would call an AI service
+    // Enhanced AI responses for mental health support
     const responses = [
       "I hear you, and I want you to know that what you're feeling is valid. Can you tell me more about what's been on your mind?",
       "Thank you for sharing that with me. It takes courage to open up. How long have you been feeling this way?",
@@ -33,18 +38,20 @@ export const ChatPage = () => {
       "That sounds really challenging. Remember that you're not alone in this. What coping strategies have you tried before?",
       "I appreciate you trusting me with your feelings. Let's work through this together. What's one small thing that might help you feel a bit better today?",
       "Your feelings matter, and so do you. Is there anything specific that triggered these feelings recently?",
+      "It's okay to not be okay sometimes. Would you like to try a quick breathing exercise or grounding technique?",
+      "I'm glad you reached out today. Taking this step shows real strength. How can I best support you right now?",
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   };
 
   const generateConversationTitle = (firstMessage: string): string => {
-    // Simple title generation based on message content
     const words = firstMessage.toLowerCase().split(' ');
     if (words.includes('stress') || words.includes('stressed')) return 'Stress Management';
     if (words.includes('anxiety') || words.includes('anxious')) return 'Anxiety Support';
     if (words.includes('sad') || words.includes('depression')) return 'Emotional Support';
     if (words.includes('sleep') || words.includes('tired')) return 'Sleep Concerns';
     if (words.includes('work') || words.includes('job')) return 'Work-Life Balance';
+    if (words.includes('panic') || words.includes('overwhelmed')) return 'Crisis Support';
     return 'General Support';
   };
 
@@ -94,35 +101,58 @@ export const ChatPage = () => {
     }));
   };
 
+  const handleLogout = () => {
+    // Reset application state
+    setConversations([]);
+    setActiveConversationId(null);
+    setIsProfileOpen(false);
+    // In a real app, you would also clear auth tokens and redirect
+    window.location.href = '/';
+  };
+
   const activeConversation = conversations.find(conv => conv.id === activeConversationId);
 
   return (
-    <div className="h-screen bg-[#0A1628] flex overflow-hidden">
-      <ChatSidebar
-        conversations={conversations}
-        activeConversationId={activeConversationId}
-        onNewConversation={handleNewConversation}
-        onSelectConversation={handleSelectConversation}
-        onProfileClick={() => setIsProfileOpen(true)}
-      />
-      
-      <div className="flex-1 flex flex-col min-w-0">
-        <ChatHeader
-          conversationTitle={activeConversation?.title || ""}
+    <SidebarProvider defaultOpen={true}>
+      <div className="min-h-screen bg-[#0A1628] flex w-full overflow-hidden">
+        <ChatSidebar
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          onNewConversation={handleNewConversation}
+          onSelectConversation={handleSelectConversation}
           onProfileClick={() => setIsProfileOpen(true)}
+          onMoodTracker={() => setShowMoodTracker(true)}
+          onCrisisResources={() => setShowCrisisResources(true)}
+          onLogout={handleLogout}
         />
         
-        <ChatArea
-          conversationId={activeConversationId}
-          messages={activeConversation?.messages || []}
-          onSendMessage={handleSendMessage}
+        <SidebarInset className="flex-1 flex flex-col min-w-0">
+          <ChatHeader
+            conversationTitle={activeConversation?.title || ""}
+          />
+          
+          <ChatArea
+            conversationId={activeConversationId}
+            messages={activeConversation?.messages || []}
+            onSendMessage={handleSendMessage}
+          />
+        </SidebarInset>
+        
+        <ProfileModal
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+        />
+
+        <MoodTracker
+          isOpen={showMoodTracker}
+          onClose={() => setShowMoodTracker(false)}
+        />
+
+        <CrisisResources
+          isOpen={showCrisisResources}
+          onClose={() => setShowCrisisResources(false)}
         />
       </div>
-      
-      <ProfileModal
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-      />
-    </div>
+    </SidebarProvider>
   );
 };
