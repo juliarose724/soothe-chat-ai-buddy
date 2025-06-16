@@ -22,7 +22,11 @@ interface Conversation {
   messages: Message[];
 }
 
-export const ChatPage = () => {
+interface ChatPageProps {
+  onLogout?: () => void;
+}
+
+export const ChatPage = ({ onLogout }: ChatPageProps) => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -106,8 +110,13 @@ export const ChatPage = () => {
     setConversations([]);
     setActiveConversationId(null);
     setIsProfileOpen(false);
-    // In a real app, you would also clear auth tokens and redirect
-    window.location.href = '/';
+    setShowMoodTracker(false);
+    setShowCrisisResources(false);
+    
+    // Call the parent logout handler to navigate back to landing
+    if (onLogout) {
+      onLogout();
+    }
   };
 
   const activeConversation = conversations.find(conv => conv.id === activeConversationId);

@@ -17,11 +17,15 @@ const Index = () => {
     setAppState("chat");
   };
 
+  const handleLogout = () => {
+    setAppState("landing");
+  };
+
   return (
     <>
       {appState === "landing" && <LandingPage onStartTalking={handleStartTalking} />}
       {appState === "auth" && <AuthPage onAuthSuccess={handleAuthSuccess} />}
-      {appState === "chat" && <ChatPage />}
+      {appState === "chat" && <ChatPage onLogout={handleLogout} />}
     </>
   );
 };
