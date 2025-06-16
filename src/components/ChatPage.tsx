@@ -97,15 +97,16 @@ export const ChatPage = () => {
   const activeConversation = conversations.find(conv => conv.id === activeConversationId);
 
   return (
-    <div className="min-h-screen bg-[#051827] flex">
+    <div className="h-screen bg-[#0A1628] flex overflow-hidden">
       <ChatSidebar
         conversations={conversations}
         activeConversationId={activeConversationId}
         onNewConversation={handleNewConversation}
         onSelectConversation={handleSelectConversation}
+        onProfileClick={() => setIsProfileOpen(true)}
       />
       
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <ChatHeader
           conversationTitle={activeConversation?.title || ""}
           onProfileClick={() => setIsProfileOpen(true)}

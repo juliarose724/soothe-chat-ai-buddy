@@ -37,7 +37,7 @@ export const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#102B40] border-[#163447] text-white max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#1A2332] border-[#2A3441] text-white max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-center">Profile & Settings</DialogTitle>
         </DialogHeader>
@@ -45,51 +45,51 @@ export const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-[#B0C4D6]">Name</Label>
+              <Label htmlFor="name" className="text-slate-300">Name</Label>
               <Input
                 id="name"
                 value={profile.name}
                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                className="bg-[#163447] border-[#163447] text-white placeholder:text-[#B0C4D6] rounded-xl focus:border-[#00D2FF]"
+                className="bg-[#242B3A] border-[#3A4553] text-white placeholder:text-slate-400 rounded-xl focus:border-[#4A9EFF]"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-[#B0C4D6]">Email</Label>
+              <Label htmlFor="email" className="text-slate-300">Email</Label>
               <Input
                 id="email"
                 type="email"
                 value={profile.email}
                 onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                className="bg-[#163447] border-[#163447] text-white placeholder:text-[#B0C4D6] rounded-xl focus:border-[#00D2FF]"
+                className="bg-[#242B3A] border-[#3A4553] text-white placeholder:text-slate-400 rounded-xl focus:border-[#4A9EFF]"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="about" className="text-[#B0C4D6]">About Me</Label>
+              <Label htmlFor="about" className="text-slate-300">About Me</Label>
               <Textarea
                 id="about"
                 value={profile.about}
                 onChange={(e) => setProfile({ ...profile, about: e.target.value })}
-                className="bg-[#163447] border-[#163447] text-white placeholder:text-[#B0C4D6] rounded-xl min-h-20 resize-none focus:border-[#00D2FF]"
+                className="bg-[#242B3A] border-[#3A4553] text-white placeholder:text-slate-400 rounded-xl min-h-20 resize-none focus:border-[#4A9EFF]"
                 placeholder="Tell us a bit about yourself..."
               />
             </div>
           </div>
           
-          <Separator className="bg-[#163447]" />
+          <Separator className="bg-[#2A3441]" />
           
           <div className="space-y-3">
             <Button
               onClick={handleSave}
-              className="w-full bg-gradient-to-r from-[#00D2FF] to-[#48FCCC] text-white rounded-xl hover:scale-105 transition-transform duration-200 font-medium"
+              className="w-full bg-gradient-to-r from-[#4A9EFF] to-[#7BDCB5] hover:from-[#5BA8FF] hover:to-[#8AE3C4] text-white rounded-xl transition-all duration-200 font-medium"
             >
               Save Changes
             </Button>
             
             <Button
               variant="outline"
-              className="w-full bg-transparent border-2 border-[#163447] text-[#B0C4D6] hover:bg-[#163447] hover:text-white rounded-xl transition-colors duration-200"
+              className="w-full bg-transparent border-2 border-[#3A4553] text-slate-300 hover:bg-[#242B3A] hover:text-white rounded-xl transition-colors duration-200"
             >
               Change Password
             </Button>
@@ -109,7 +109,7 @@ export const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
             </Button>
           </div>
           
-          <Separator className="bg-[#163447]" />
+          <Separator className="bg-[#2A3441]" />
           
           <div className="space-y-3">
             {!showDeleteConfirm ? (
@@ -129,7 +129,7 @@ export const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
                   <Button
                     onClick={() => setShowDeleteConfirm(false)}
                     variant="outline"
-                    className="flex-1 bg-transparent border-2 border-[#163447] text-[#B0C4D6] hover:bg-[#163447] hover:text-white rounded-xl"
+                    className="flex-1 bg-transparent border-2 border-[#3A4553] text-slate-300 hover:bg-[#242B3A] hover:text-white rounded-xl"
                   >
                     Cancel
                   </Button>
